@@ -1,318 +1,718 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="UTF-8">
-    <title>Portfolio Website | Riyaj Chaulagain</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Ubuntu:wght@400;500;700&display=swap">
-       <link rel="stylesheet" href="style.css">
-    <!-- Fontawesome CDN Link -->
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  </head>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Riyaj Chaulagain | Full-Stack & AI Engineer</title>
+  <meta name="description" content="Riyaj Chaulagain — CS Student at Southeastern Louisiana University, GPA 3.96 out of 4.0. Full-Stack Developer and AI Engineer from Nepal."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
 <body>
-  <!-- Move to up button -->
-  <div class="scroll-button">
-    <a href="#home"><i class="fas fa-arrow-up"></i></a>
+
+<!-- NOISE -->
+<div class="noise" aria-hidden="true"></div>
+
+<!-- ═══ TOP NAVIGATION BAR ═══════════════════════════════════════ -->
+<nav class="topnav" id="topnav">
+  <div class="topnav-inner">
+    <a href="#about" class="topnav-logo">RC<span class="gold">.</span></a>
+    <div class="topnav-links" id="topnavLinks">
+      <a href="#about"          class="tnl active" data-section="about"><i class="fa-solid fa-user"></i> About</a>
+      <a href="#resume"         class="tnl"         data-section="resume"><i class="fa-solid fa-briefcase"></i> Resume</a>
+      <a href="#projects"       class="tnl"         data-section="projects"><i class="fa-solid fa-code"></i> Projects</a>
+      <a href="#certifications" class="tnl"         data-section="certifications"><i class="fa-solid fa-certificate"></i> Certifications</a>
+      <a href="#contact"        class="tnl"         data-section="contact"><i class="fa-solid fa-paper-plane"></i> Contact</a>
+    </div>
+    <button class="mob-burger" id="mobBurger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
-  
-  <!-- navgaition menu -->
-  <nav>
-    <div class="navbar">
-      <div class="logo"><a href="#">Portfolio.</a></div>
-      <ul class="menu">
-          <li><a href="#home">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#experience">Experience</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#contact">Contact</a></li>
-          <div class="cancel-btn">
-            <i class="fas fa-times"></i>
-          </div>
-      </ul>
-      <div class="media-icons">
-        <a href="https://www.linkedin.com/in/riyajchaulagain/" target="_blank"><i class="fab fa-linkedin"></i></a>
-        <a href="https://github.com/riyajclgn123" target="_blank"><i class="fab fa-github"></i></a>
-        <a href="https://www.instagram.com/riyajchaulagain/" target="_blank"><i class="fab fa-instagram"></i></a>
+  <!-- Mobile dropdown -->
+  <div class="mob-nav-dropdown" id="mobNavDropdown">
+    <a href="#about"          class="tnl-mob active" data-section="about"><i class="fa-solid fa-user"></i> About</a>
+    <a href="#resume"         class="tnl-mob"         data-section="resume"><i class="fa-solid fa-briefcase"></i> Resume</a>
+    <a href="#projects"       class="tnl-mob"         data-section="projects"><i class="fa-solid fa-code"></i> Projects</a>
+    <a href="#certifications" class="tnl-mob"         data-section="certifications"><i class="fa-solid fa-certificate"></i> Certifications</a>
+    <a href="#contact"        class="tnl-mob"         data-section="contact"><i class="fa-solid fa-paper-plane"></i> Contact</a>
+  </div>
+</nav>
+
+<!-- ═══ SIDEBAR ═══════════════════════════════════════════════════ -->
+<aside class="sidebar" id="sidebar">
+  <div class="sb-inner">
+
+    <!-- Avatar — fixed, no spin animation -->
+    <div class="sb-avatar-wrap">
+      <div class="sb-ring-static">
+        <img src="assets/1.png"
+             alt="Riyaj Chaulagain" class="sb-avatar"
+             onerror="this.src='https://ui-avatars.com/api/?name=RC&background=b8860b&color=fff&size=200&bold=true'"/>
+      </div>
+      <div class="sb-avail"><span class="avail-dot"></span>Open to Opportunities</div>
+    </div>
+
+    <!-- Name / Role -->
+    <h1 class="sb-name">Riyaj<br/>Chaulagain</h1>
+    <p class="sb-title">Full-Stack Dev &amp; AI Engineer</p>
+    <p class="sb-origin"><i class="fa-solid fa-flag"></i> From Nepal &nbsp;·&nbsp; <i class="fa-solid fa-location-dot"></i> Hammond, LA</p>
+
+    <!-- Info items -->
+    <div class="sb-info">
+      <a href="mailto:criyaj2017@gmail.com" class="sbi">
+        <span class="sbi-icon"><i class="fa-solid fa-envelope"></i></span>
+        <div><span class="sbi-lbl">EMAIL</span><span class="sbi-val">criyaj2017@gmail.com</span></div>
+      </a>
+      <a href="assets/resume.pdf" download class="sbi">
+        <span class="sbi-icon"><i class="fa-solid fa-file-arrow-down"></i></span>
+        <div><span class="sbi-lbl">RESUME</span><span class="sbi-val">Download PDF</span></div>
+      </a>
+      <a href="https://linkedin.com/in/riyajchaulagain/" target="_blank" class="sbi">
+        <span class="sbi-icon"><i class="fa-brands fa-linkedin-in"></i></span>
+        <div><span class="sbi-lbl">LINKEDIN</span><span class="sbi-val">riyajchaulagain</span></div>
+      </a>
+      <a href="https://github.com/riyajclgn123" target="_blank" class="sbi">
+        <span class="sbi-icon"><i class="fa-brands fa-github"></i></span>
+        <div><span class="sbi-lbl">GITHUB</span><span class="sbi-val">riyajclgn123</span></div>
+      </a>
+      <div class="sbi">
+        <span class="sbi-icon"><i class="fa-solid fa-location-dot"></i></span>
+        <div><span class="sbi-lbl">LOCATION</span><span class="sbi-val">Hammond, Louisiana, USA</span></div>
       </div>
     </div>
-    <div class="menu-btn">
-      <i class="fas fa-bars"></i>
-    </div>
-  </nav>
 
-<!-- Home Section Start -->
- <section class="home" id="home">
-   <div class="home-content">
-     <div class="text">
-       <div class="text-one">Hello,</div>
-       <div class="text-two">I'm Riyaj Chaulagain</div>
-       <div class="text-three">Web Developer | AI & Full-Stack Enthusiast</div>
-       <div class="text-four">From Nepal</div>
-     </div>
-     <div class="button">
-       <button><a href="https://www.facebook.com/riyaj.chaulagain/" target="_blank" style="color: white; text-decoration: none;">Hire Me</a></button>
-     </div>
-   </div>
- </section>
-
-<!-- About Section Start -->
-<section class="about" id="about">
-  <div class="content">
-    <div class="title"><span>About Me</span></div>
-  <div class="about-details">
-    <div class="left">
-      <img src="Riyaj1.png" alt="">
+    <!-- Social icons -->
+    <div class="sb-socials">
+      <a href="https://linkedin.com/in/riyajchaulagain/" target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+      <a href="https://github.com/riyajclgn123" target="_blank" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+      <a href="https://www.instagram.com/riyajchaulagain/" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
     </div>
-    <div class="right">
-      <div class="topic">Designing Is My Passion</div>
-      <p>I am a Computer Science student at Southeastern Louisiana University with a strong passion for web development, AI, and full-stack solutions. I enjoy creating interactive, user-friendly websites and applications that solve real-world problems.
-I specialize in full-stack development, AI integration, and web app design, and I love mentoring others and sharing knowledge with the community.</p>
-      <div class="button">
-        <button><a href="resume.pdf" style="color: white; text-decoration: none;" target="_blank"> Resume</a></button>
+
+  </div>
+</aside>
+
+<!-- ═══ MAIN CONTENT ═══════════════════════════════════════════ -->
+<main class="main">
+
+  <!-- ──────────────── ABOUT ──────────────── -->
+  <section class="sec active" id="about">
+
+    <div class="sec-hd">
+      <h2 class="sec-title">About Me</h2>
+      <div class="sec-line"></div>
+    </div>
+
+    <div class="about-container">
+
+    <div class="about-bio">
+      <p>I'm <strong>Riyaj Chaulagain</strong>, a Computer Science student at <strong>Southeastern Louisiana University</strong> maintaining a <strong>3.96/4.0 GPA</strong> (President's List, multiple semesters) and minoring in Mathematics. Originally from Nepal, I came to the U.S. with a singular drive: to build technology that matters. I specialize in full-stack engineering, large language model fine-tuning, and cloud-native AI systems that ship to production — not just live in notebooks.</p>
+
+      <p>My engineering philosophy is simple: <em>write code that is readable, scalable, and purposeful</em>. Whether that's a distributed Rust backend powering real-time multiplayer games, a fine-tuned Phi-2 model serving as an AI mock interviewer, or a React Native IoT app monitoring farmland in real time — I care deeply about the craft at every layer of the stack. I don't just build features; I architect systems with longevity and user impact in mind.</p>
+
+      <p>Beyond the keyboard, I serve as <strong>Vice President of the Nepalese Student Association</strong> and <strong>Treasurer of the Association of Applied Cybersecurity</strong> at SELU, where I mentor students, manage budgets for technical workshops, and foster a community that bridges cultures and disciplines. As a <strong>Teaching Assistant</strong>, I've helped 30+ students improve their exam scores by an average of 20% — because the best engineers are also great communicators and teachers.</p>
+
+      <p>I'm actively seeking <strong>internship and full-time opportunities</strong> in software engineering and AI. If you're building something ambitious and want someone who brings both deep technical skill and genuine intellectual curiosity to the table — let's connect.</p>
+    </div>
+       <!-- Right Side Image -->
+      <div class="about-image">
+        <img src="assets/3.jpeg" alt="Riyaj Chaulagain">
+      </div>
+      </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card"><span class="stat-n" data-target="3">3</span><span class="stat-s">+</span><span class="stat-l">Years Coding</span></div>
+      <div class="stat-card"><span class="stat-n" data-target="10">10</span><span class="stat-s">+</span><span class="stat-l">Projects Built</span></div>
+      <div class="stat-card"><span class="stat-n" data-target="30">30</span><span class="stat-s">+</span><span class="stat-l">Students Mentored</span></div>
+      <div class="stat-card"><span class="stat-gpa">3.96</span><span class="stat-s">/4.0</span><span class="stat-l">GPA</span></div>
+    </div>
+
+    <!-- Skills headline -->
+    <div class="sub-hd"><h3>Technical Skills</h3></div>
+
+    <div class="skill-cards">
+      <div class="skc"><div class="skc-icon"><i class="fa-solid fa-code"></i></div><h4>Languages</h4><p>Python, JavaScript, TypeScript, C#, Java, SQL, Rust — strong grasp of OOP, functional paradigms, and algorithmic complexity.</p><div class="skc-tags"><span>Python</span><span>TypeScript</span><span>C#</span><span>Java</span><span>Rust</span><span>SQL</span></div></div>
+      <div class="skc"><div class="skc-icon"><i class="fa-solid fa-layer-group"></i></div><h4>Full-Stack &amp; Web</h4><p>End-to-end apps with React, Angular, Next.js, .NET, Spring Boot, Flask, FastAPI — pixel-perfect UI to secure, scalable backends.</p><div class="skc-tags"><span>React</span><span>Angular</span><span>Next.js</span><span>Spring Boot</span><span>FastAPI</span><span>.NET</span></div></div>
+      <div class="skc"><div class="skc-icon brain"><i class="fa-solid fa-brain"></i></div><h4>AI / ML &amp; LLMs</h4><p>Fine-tuning LLMs (Phi-2, DeepSeek), RAG pipelines, vector embeddings, PyTorch, TensorFlow, Scikit-learn, Vertex AI, LangChain.</p><div class="skc-tags"><span>PyTorch</span><span>LangChain</span><span>RAG</span><span>Vertex AI</span><span>TensorFlow</span></div></div>
+      <div class="skc"><div class="skc-icon"><i class="fa-solid fa-cloud"></i></div><h4>Cloud &amp; DevOps</h4><p>Multi-cloud deployments on GCP, Azure, AWS with Docker, Kubernetes, CI/CD pipelines, Firebase, and container orchestration.</p><div class="skc-tags"><span>GCP</span><span>Docker</span><span>Kubernetes</span><span>Azure</span><span>Firebase</span><span>CI/CD</span></div></div>
+      <div class="skc"><div class="skc-icon"><i class="fa-solid fa-database"></i></div><h4>Databases</h4><p>Relational and NoSQL — PostgreSQL, MySQL, MongoDB, Redis — with expertise in schema design, query optimization, and real-time pipelines.</p><div class="skc-tags"><span>PostgreSQL</span><span>MySQL</span><span>MongoDB</span><span>Redis</span><span>Firebase</span></div></div>
+      <div class="skc"><div class="skc-icon"><i class="fa-solid fa-mobile-screen"></i></div><h4>Mobile &amp; IoT</h4><p>Cross-platform React Native apps with Arduino/Raspberry Pi IoT integrations, real-time sensor processing, and embedded systems.</p><div class="skc-tags"><span>React Native</span><span>Arduino</span><span>Flask IoT</span><span>NumPy</span><span>Pandas</span></div></div>
+    </div>
+
+    <!-- Proficiency bars -->
+    <div class="sub-hd" style="margin-top:2.5rem"><h3>Proficiency</h3></div>
+    <div class="prof-bars">
+      <div class="pb"><div class="pb-hd"><span>HTML / CSS / JavaScript</span><span class="pb-pct">98%</span></div><div class="pb-track"><div class="pb-fill" data-w="98"></div></div></div>
+      <div class="pb"><div class="pb-hd"><span>React &amp; React Native</span><span class="pb-pct">95%</span></div><div class="pb-track"><div class="pb-fill" data-w="95"></div></div></div>
+      <div class="pb"><div class="pb-hd"><span>Python, AI/ML &amp; LLM Engineering</span><span class="pb-pct">92%</span></div><div class="pb-track"><div class="pb-fill" data-w="92"></div></div></div>
+      <div class="pb"><div class="pb-hd"><span>C# .NET &amp; Java / Spring Boot</span><span class="pb-pct">89%</span></div><div class="pb-track"><div class="pb-fill" data-w="89"></div></div></div>
+      <div class="pb"><div class="pb-hd"><span>SQL &amp; Database Design</span><span class="pb-pct">93%</span></div><div class="pb-track"><div class="pb-fill" data-w="91"></div></div></div>
+      <div class="pb"><div class="pb-hd"><span>Cloud, Docker &amp; DevOps</span><span class="pb-pct">89%</span></div><div class="pb-track"><div class="pb-fill" data-w="84"></div></div></div>
+    </div>
+
+  </section>
+
+  <!-- ──────────────── RESUME ──────────────── -->
+  <section class="sec" id="resume">
+
+    <div class="sec-hd">
+      <h2 class="sec-title">Resume</h2>
+      <div class="sec-line"></div>
+      <a href="assets/resume.pdf" download class="btn-gold">
+        <i class="fa-solid fa-download"></i> Download PDF
+      </a>
+    </div>
+
+    <!-- EDUCATION -->
+    <div class="rg">
+      <div class="rg-lbl"><i class="fa-solid fa-graduation-cap"></i> Education</div>
+      <div class="timeline">
+        <div class="tli">
+          <div class="tli-dot"></div>
+          <div class="tli-card">
+            <div class="tli-top">
+              <div><h3 class="tli-org">Southeastern Louisiana University</h3><p class="tli-role">B.S. Computer Science — Minor in Mathematics</p></div>
+              <div class="tli-meta"><span><i class="fa-regular fa-calendar"></i> Jan 2024 — Dec 2027</span><span><i class="fa-solid fa-location-dot"></i> Hammond, LA</span></div>
+            </div>
+            <p class="tli-body">GPA: <strong>3.96/4.0</strong><br>
+              Coursework: <strong>Data Structures &amp; Algorithms, Software Engineering, AI, Machine Learning, Computer Networking &amp; Security, Database Systems.</strong></p>
+            <div class="award-row">
+              <span class="award"><i class="fa-solid fa-trophy"></i> President's List — Multiple Semesters</span>
+              <span class="award"><i class="fa-solid fa-medal"></i> Priority Honors Scholarship</span>
+              <span class="award"><i class="fa-solid fa-star"></i> Outstanding Leadership Award</span>
+              <span class="award"><i class="fa-solid fa-award"></i> Student Org Excellence Award</span>
+              <span class="award"><i class="fa-solid fa-calculator"></i> Runner-Up — SLU Integration Bee</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  </div>
-</section>
 
-<!-- My Skill Section Start -->
-<section class="skills-section" id="skills">
- <div class="content">
-   <div class="title"><span>My Skills</span></div>
-   <div class="skills-details">
-     <div class="text">
-       <div class="topic">Skills Reflects Our Knowledge</div>
-       <p>I combine creativity and technical skills to build impactful digital solutions: <br> 
-        <br>
+    <!-- EXPERIENCE -->
+    <div class="rg">
+      <div class="rg-lbl"><i class="fa-solid fa-briefcase"></i> Work Experience</div>
+      <div class="timeline">
 
-1. HTML / CSS / JavaScript – Responsive, interactive web designs
-<br> 
-<br>
-
-2. React & React Native – Modern web & mobile applications
-<br>
-<br>
-3. C++ & Python – Algorithmic problem-solving and AI/ML projects
-<br>
-<br>
-4. C# .NET & SQL – Backend development, database management
-<br>
-<br>
-5. AI & LLMs – Chatbots, document assistants, and real-time analytics
-<br>
-<br></p>
-       <div class="experience">
-         <div class="num">3</div>
-         <div class="exp">Years Of <br> Experience</div>
-       </div>
-     </div>
-     <div class="boxes">
-       <div class="box">
-         <div class="topic">HTML/CSS/JavaScript</div>
-         <div class="per">98%</div>
-       </div>
-       <div class="box">
-         <div class="topic">C++ & Python</div>
-         <div class="per">89%</div>
-       </div>
-       <div class="box">
-         <div class="topic">C# .NET & SQL</div>
-         <div class="per">95%</div>
-       </div>
-       <div class="box">
-         <div class="topic">AI & LLMS</div>
-         <div class="per">92%</div>
-       </div>
-     </div>
-   </div>
- </div>
-</section>
-
-<!-- Experience Section Start -->
-<section class="experience-section" id="experience">
-  <div class="experience-bg"></div>
-  <div class="content">
-    <div class="title"><span>Experiences</span></div>
-    <div class="experience-container">
-      <div class="experience-border">
-        <!-- First Entry -->
-       <div class="experience-item">
-          <div class="experience-bullet">
-            <svg width="8" height="8" fill="white" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l2.1 6.478a1 1 0 00.95.69h6.769c.969 0 1.372 1.24.588 1.81l-5.479 3.987a1 1 0 00-.364 1.118l2.1 6.478c.3.921-.755 1.688-1.538 1.118l-5.479-3.987a1 1 0 00-1.176 0l-5.479 3.987c-.783.57-1.838-.197-1.538-1.118l2.1-6.478a1 1 0 00-.364-1.118L2.44 11.905c-.783-.57-.38-1.81.588-1.81h6.769a1 1 0 00.95-.69l2.1-6.478z"></path>
-            </svg>
-          </div>
-          <div class="experience-card ">
-            <div class="experience-header">
-              <span class="experience-company">Southeastern Louisiana University</span>
-              <span class="experience-location">Hammond, Louisiana</span>
+        <!-- CS TUTOR -->
+        <div class="tli">
+          <div class="tli-dot"></div>
+          <div class="tli-card">
+            <div class="tli-top">
+              <div><h3 class="tli-org">Southeastern Louisiana University</h3><p class="tli-role gold-text">Teaching Assistant — Computer Science</p></div>
+              <div class="tli-meta"><span><i class="fa-regular fa-calendar"></i> June 2025 — Present</span><span><i class="fa-solid fa-location-dot"></i> Hammond, LA</span></div>
             </div>
-            <div class="experience-role">
-              <span class="experience-position">Computer Science Tutor</span>
-              <span class="experience-date">June 2025 – Present</span>
-            </div>
-            <ul class="experience-details">
-              <li>Tutored core CS concepts (algorithms like merge sort, greedy, pseudocode, computer ethics) to over 30 students, creating 50+ structured Praxis study resources aligned with curriculum standards for better retention.</li>
-              <li>Improved students’ exam scores by an average of 20% and boosted confidence in core CS topics.</li>
-           
+            <ul class="bullet-block">
+              <li>Mentored 30+ students individually and in groups across core CS topics including Java, Python, OOP, Data Structures &amp; Algorithms, pseudocode design, and computer ethics.</li>
+              <li>Designed and delivered 50+ structured study guides, problem sets, and mock exams aligned with course curriculum to close knowledge gaps and improve exam readiness.</li>
+              <li>Ran weekly one-on-one and group tutoring sessions with step-by-step visual frameworks that demystified abstract algorithmic concepts.</li>
+              <li>Students improved exam scores by an average of <strong>20%</strong>; all 30+ students reported significantly boosted confidence across the semester.</li>
             </ul>
           </div>
         </div>
 
-        <!-- Second Entry -->
-          <div class="experience-item">
-          <div class="experience-bullet">
-            <svg width="8" height="8" fill="white" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l2.1 6.478a1 1 0 00.95.69h6.769c.969 0 1.372 1.24.588 1.81l-5.479 3.987a1 1 0 00-.364 1.118l2.1 6.478c.3.921-.755 1.688-1.538 1.118l-5.479-3.987a1 1 0 00-1.176 0l-5.479 3.987c-.783.57-1.838-.197-1.538-1.118l2.1-6.478a1 1 0 00-.364-1.118L2.44 11.905c-.783-.57-.38-1.81.588-1.81h6.769a1 1 0 00.95-.69l2.1-6.478z"></path>
-            </svg>
-          </div>
-          <div class="experience-card experience-card-alt">
-            <div class="experience-header">
-              <span class="experience-company">Southeastern Louisiana University</span>
-              <span class="experience-location">Hammond, Louisiana</span>
+        <!-- MATH TUTOR -->
+        <div class="tli">
+          <div class="tli-dot"></div>
+          <div class="tli-card">
+            <div class="tli-top">
+              <div><h3 class="tli-org">Southeastern Louisiana University</h3><p class="tli-role gold-text">Mathematics Tutor</p></div>
+              <div class="tli-meta"><span><i class="fa-regular fa-calendar"></i> Aug 2024 — Present</span><span><i class="fa-solid fa-location-dot"></i> Hammond, LA</span></div>
             </div>
-            <div class="experience-role">
-              <span class="experience-position">Research & Development Team</span>
-              <span class="experience-date">November 2024 – August 2025</span>
-            </div>
-            <ul class="experience-details">
-              <li>Built and maintained web apps using ReactJS, Angular, and Ionic for academic research.</li>
-              <li>Refined WordPress sites to enhance UX and streamline inter-departmental tasks, and integrated OpenAI API to build a chatbot for user-specific queries.</li>
-              <li>Developed an e-articles platform (React + Firebase) with copyright protection, live database and auto-expiry.</li>
+            <ul class="bullet-block">
+              <li>Provided individualized and group mathematics tutoring to 30+ students across Geometry, Algebra, Calculus (Derivatives &amp; Antiderivatives), and Statistics courses.</li>
+              <li>Created 50+ customized lesson plans, problem sets, and mock exams targeting each student's specific weaknesses with real-world analogies and visual teaching methods.</li>
+              <li>Organized weekly collaborative group sessions to tackle the most challenging topics and build shared problem-solving confidence ahead of high-stakes exams.</li>
+              <li>Achieved a <strong>full letter-grade increase for 90% of students</strong>; measurably improved critical thinking, problem-solving speed, and exam confidence across all tutored courses.</li>
             </ul>
           </div>
         </div>
 
-        
-
-        <!-- Third Entry -->
-
-        <div class="experience-item">
-          <div class="experience-bullet">
-            <svg width="8" height="8" fill="white" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l2.1 6.478a1 1 0 00.95.69h6.769c.969 0 1.372 1.24.588 1.81l-5.479 3.987a1 1 0 00-.364 1.118l2.1 6.478c.3.921-.755 1.688-1.538 1.118l-5.479-3.987a1 1 0 00-1.176 0l-5.479 3.987c-.783.57-1.838-.197-1.538-1.118l2.1-6.478a1 1 0 00-.364-1.118L2.44 11.905c-.783-.57-.38-1.81.588-1.81h6.769a1 1 0 00.95-.69l2.1-6.478z"></path>
-            </svg>
-          </div>
-          <div class="experience-card ">
-            <div class="experience-header">
-              <span class="experience-company">Southeastern Louisiana University</span>
-              <span class="experience-location">Hammond, Louisiana</span>
+        <!-- RESEARCH ASSISTANT -->
+        <div class="tli">
+          <div class="tli-dot"></div>
+          <div class="tli-card">
+            <div class="tli-top">
+              <div><h3 class="tli-org">Southeastern Louisiana University — R&amp;D</h3><p class="tli-role gold-text">Undergraduate Research Assistant</p></div>
+              <div class="tli-meta"><span><i class="fa-regular fa-calendar"></i> Nov 2024 — Aug 2025</span><span><i class="fa-solid fa-location-dot"></i> Hammond, LA</span></div>
             </div>
-            <div class="experience-role">
-              <span class="experience-position">Mathematics Tutor</span>
-              <span class="experience-date">August 2024 – Present</span>
-            </div>
-            <ul class="experience-details">
-              <li>Taught Geometry, Algebra, Calculus (Derivatives & Antiderivatives), and Statistics, simplifying complex concepts to improve student understanding and performance.</li>
-              <li>Assisted with test prep and problem-solving, boosting critical thinking and exam results.</li>
-              <li>Organized group sessions to encourage collaborative learning and address challenging topics.</li>
+            <ul class="bullet-block">
+              <li>Engineered an LLM benchmarking platform using <strong>React and Firebase</strong> to evaluate OpenAI API, Gemini, and Claude — measuring response quality, latency, accuracy, and usability across standardized prompts; presented findings directly to Dr. Minh Huynh.</li>
+              <li>Architected a secure <strong>Angular-based digital e-library</strong> with session-based access control, real-time Firebase database architecture, and Git-managed version history — adopted as the department's primary digital resource platform.</li>
+              <li>Built and maintained additional academic web apps in ReactJS, Angular, and Ionic; integrated OpenAI API chatbot for user-specific queries across platforms.</li>
+              <li>Research findings directly guided the department's model selection and <strong>reduced manual LLM evaluation workload by 5+ hours per week</strong>.</li>
             </ul>
           </div>
         </div>
 
-        <!-- Fourth Entry -->
-        <div class="experience-item">
-          <div class="experience-bullet">
-            <svg width="8" height="8" fill="white" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l2.1 6.478a1 1 0 00.95.69h6.769c.969 0 1.372 1.24.588 1.81l-5.479 3.987a1 1 0 00-.364 1.118l2.1 6.478c.3.921-.755 1.688-1.538 1.118l-5.479-3.987a1 1 0 00-1.176 0l-5.479 3.987c-.783.57-1.838-.197-1.538-1.118l2.1-6.478a1 1 0 00-.364-1.118L2.44 11.905c-.783-.57-.38-1.81.588-1.81h6.769a1 1 0 00.95-.69l2.1-6.478z"></path>
-            </svg>
-          </div>
-          <div class="experience-card experience-card-alt">
-            <div class="experience-header">
-              <span class="experience-company">Incubate Nepal</span>
-              <span class="experience-location">Kathmandu, Nepal</span>
+        <!-- INCUBATE NEPAL -->
+        <div class="tli">
+          <div class="tli-dot"></div>
+          <div class="tli-card">
+            <div class="tli-top">
+              <div><h3 class="tli-org">Incubate Nepal</h3><p class="tli-role gold-text">Mechanical Designer &amp; Developer — Internship</p></div>
+              <div class="tli-meta"><span><i class="fa-regular fa-calendar"></i> Jul 2022 — Feb 2023 · 8 months</span><span><i class="fa-solid fa-location-dot"></i> Kathmandu, Nepal · Hybrid</span></div>
             </div>
-            <div class="experience-role">
-              <span class="experience-position">Mechanical Designer & Developer</span>
-              <span class="experience-date">July 2022 - February 2023</span>
-            </div>
-            <ul class="experience-details">
-              <li>Designed and 3D-printed prototypes using Autodesk Fusion 360 for innovative mechanical systems.</li>
-              <li>Programmed Arduino-based car control systems, optimizing speed calculations and wheel rotations.</li>
-              <li>Tested and refined models for durability and performance on various terrains.</li>
+            <ul class="bullet-block">
+              <li>Designed mechanical prototypes in <strong>Autodesk Fusion 360</strong> and produced functional 3D-printed components for electromechanical systems, including an Arduino-driven model car.</li>
+              <li>Programmed <strong>Arduino microcontrollers in C++</strong> to govern motor speed, directional wheel rotations, steering servo integration, and sensor feedback — enabling stable handling across varied terrain types.</li>
+              <li>Collaborated with cross-functional engineering teams on design reviews, iterative durability testing, and stakeholder presentations using Canva and PowerPoint.</li>
+              <li>Delivered multiple functional prototypes that passed performance testing across various terrains; built foundational embedded systems skills that directly inform current IoT and hardware projects.</li>
             </ul>
+            <div class="skill-used-row">
+              <span class="su-lbl">Skills:</span>
+              <span>Autodesk Fusion 360</span><span>AutoCAD</span><span>Arduino (C++)</span><span>3D Printing</span><span>Research</span><span>Team Leadership</span><span>Project Management</span>
+            </div>
           </div>
         </div>
 
-        
       </div>
     </div>
-  </div>
-</section>
 
-<!-- My Services Section Start -->
- <section class="services" id="services">
-   <div class="content">
-     <div class="title"><span>My Services</span></div>
-     <div class="boxes">
-       <div class="box">
-         <div class="icon">
-           <i class="fas fa-desktop"></i>
-       </div>
-       <div class="topic">Web Devlopment</div>
-       <p>Full-stack websites, e-commerce platforms, and web apps with React, Tailwind, and Firebase.</p>
-     </div>
-       <div class="box">
-         <div class="icon">
-           <i class="fas fa-paint-brush"></i>
-       </div>
-       <div class="topic">App Development</div>
-       <p>Mobile apps using React Native with backend integrations.</p>
-     </div>
-       <div class="box">
-         <div class="icon">
-           <i class="fas fa-chart-line"></i>
-       </div>
-       <div class="topic">AI & ML Integration</div>
-       <p>AI chatbots, document assistants, and predictive systems using LLMs and deep learning.</p>
-     </div>
-       <div class="box">
-         <div class="icon">
-           <i class="fab fa-android"></i>
-       </div>
-       <div class="topic">UI/UX & Graphic Design</div>
-       <p>Designing intuitive and visually appealing interfaces.</p>
-     </div>
-       <div class="box">
-         <div class="icon">
-           <i class="fas fa-tablet-alt"></i>
-       </div>
-       <div class="topic">Digital Marketing Support</div>
-       <p>Website optimization, social media integration, and analytics.</p>
-     </div>
-       <div class="box">
-         <div class="icon">
-           <i class="fas fa-camera-retro"></i>
-       </div>
-       <div class="topic">Photography & Icon Design</div>
-       <p>Visual content creation for web and branding.</p>
-     </div>
-   </div>
-   </div>
- </section>
+    <!-- LEADERSHIP -->
+    <div class="rg">
+      <div class="rg-lbl"><i class="fa-solid fa-users"></i> Leadership &amp; Involvement</div>
+      <div class="inv-grid">
 
-<!-- Contact Me section Start -->
-<section class="contact" id="contact">
-  <div class="content">
-    <div class="title"><span>Contact Me</span></div>
-    <div class="text">
-      <div class="topic">Have Any Project?</div>
-      <p>I am always open to collaborating on web development, AI projects, or digital solutions. If you have an idea or project in mind, feel free to reach out, and we can bring it to life.</p>
-      <div class="button">
-        <button><a href="https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSKkHbhhzZvhzhdcffWbBwtsQMdgwklsvJnBbRHFpTJBvntNCgLGFLwrNnFXcZkTnDnzsfMW" target="_blank" style="color: white; text-decoration: none;">Let's Chat</a></button>
+        <div class="inv-card">
+          <div class="inv-icon"><i class="fa-solid fa-person-chalkboard"></i></div>
+          <div>
+            <div class="inv-top"><h4>Vice President</h4><span>2024 — Present</span></div>
+            <p class="inv-org">Nepalese Student Association at SELU (NSAS)</p>
+            <p class="inv-desc">Co-lead organizational strategy, cultural showcases, and mentorship programs for Nepalese and international students. Act as a bridge between the Nepalese community and the broader SELU campus, fostering intercultural dialogue and professional development opportunities for all members.</p>
+          </div>
+        </div>
+
+        <div class="inv-card">
+          <div class="inv-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <div>
+            <div class="inv-top"><h4>Treasurer</h4><span>2024 — Present</span></div>
+            <p class="inv-org">Association of Applied Cybersecurity (AAC)</p>
+            <p class="inv-desc">Manage the organization's budget and coordinate funding for cybersecurity workshops, CTF competitions, and industry certification prep sessions.</p>
+          </div>
+        </div>
+
+        <div class="inv-card">
+          <div class="inv-icon"><i class="fa-solid fa-laptop-code"></i></div>
+          <div>
+            <div class="inv-top"><h4>Member</h4><span>2024 — Present</span></div>
+            <p class="inv-org">Association of Computing Machinery (ACM)</p>
+            <p class="inv-desc">Actively participate in competitive programming events, hackathons, and technical workshops. Collaborate with CS peers on algorithmic challenges and open-source contributions.</p>
+          </div>
+        </div>
+
+        <div class="inv-card">
+          <div class="inv-icon"><i class="fa-brands fa-google"></i></div>
+          <div>
+            <div class="inv-top"><h4>Treasurer</h4><span>2024 — Present</span></div>
+            <p class="inv-org">Google Developer Group — Southeastern (GDG)</p>
+            <p class="inv-desc">Engage with Google-led workshops on GCP, Firebase, Flutter, and modern AI tools. Connect with industry professionals and mentors in the regional tech ecosystem.</p>
+          </div>
+        </div>
+
+        <div class="inv-card">
+          <div class="inv-icon"><i class="fa-solid fa-globe"></i></div>
+          <div>
+            <div class="inv-top"><h4>Member</h4><span>2024 — Present</span></div>
+            <p class="inv-org">International Student Union (ISU) — SELU</p>
+            <p class="inv-desc">Contribute to events celebrating cultural diversity, advocate for international student rights, and assist in organizing cross-cultural programs and orientation sessions.</p>
+          </div>
+        </div>
+
       </div>
     </div>
-  </div>
-</section>
 
-<!-- Footer Section Start -->
-<footer>
-  <div class="text">
-    <span>Created By <a href="#">Riyaj Chaulagain</a> | &#169; 2022 All Rights Reserved</span>
-  </div>
-</footer>
+  </section>
 
-  <script src ="script.js"> </script>
+  <!-- ──────────────── PROJECTS ──────────────── -->
+  <section class="sec" id="projects">
+
+    <div class="sec-hd">
+      <h2 class="sec-title">Projects</h2>
+      <div class="sec-line"></div>
+    </div>
+
+    <!-- Filter -->
+    <div class="proj-filters">
+      <button class="pf active" data-filter="all">All</button>
+      <button class="pf" data-filter="fullstack">Full-Stack</button>
+      <button class="pf" data-filter="ai">AI / ML</button>
+      <button class="pf" data-filter="mobile">Mobile / IoT</button>
+      <button class="pf" data-filter="game">Games</button>
+      <button class="pf" data-filter="hardware">Hardware</button>
+    </div>
+
+    <div class="proj-grid" id="projGrid">
+
+      <!-- AI SMART STICK — NEW PROJECT -->
+      <div class="pc featured" data-cat="ai mobile hardware">
+        <span class="feat-tag">🆕 Latest</span>
+        <div class="pc-carousel" data-slides='[
+          {"icon":"fa-solid fa-eye","color":"#0d3b2e","label":"Real-time Object Detection"},
+          {"icon":"fa-solid fa-location-dot","color":"#0a2e1a","label":"GPS Tracking & Alerts"},
+          {"icon":"fa-solid fa-hand-sparkles","color":"#082514","label":"Haptic Feedback System"},
+          {"icon":"fa-solid fa-wifi","color":"#0d3b2e","label":"Remote Monitoring Web App"}
+        ]'></div>
+        <div class="pc-body">
+          <div class="pc-meta"><span class="pc-badge ai">AI / ML</span><span class="pc-badge mobile" style="margin-left:4px">IoT</span><span class="pc-badge hardware" style="margin-left:4px">Hardware</span><span class="pc-date">Jan 2026 — Present</span></div>
+          <h3 class="pc-title">AI Smart Stick</h3>
+          <p class="pc-sub">Assistive Technology for Visually Impaired — Raspberry Pi 4 · YOLOv5 · ExpressJS</p>
+          <ul class="pc-pts">
+            <li>Developing an <strong>AI-powered smart stick</strong> using Raspberry Pi 4, camera module, ultrasonic sensor, and vibration motor — with YOLOv5 model for real-time object detection, distance sensing, and audio/haptic alerts to assist visually impaired users.</li>
+            <li>Building a <strong>responsive monitoring web app</strong> with ExpressJS and a Python backend to enable GPS tracking and image-based alerts, allowing caregivers to monitor user safety remotely.</li>
+            <li>Integrating real-time sensor fusion across visual and proximity inputs to enable confident, safe navigation in dynamic environments.</li>
+          </ul>
+          <div class="pc-tags"><span>Raspberry Pi 4</span><span>YOLOv5</span><span>Python</span><span>ExpressJS</span><span>IoT</span><span>CV</span></div>
+        </div>
+      </div>
+
+      <!-- ACTIV-ATE -->
+      <div class="pc" data-cat="fullstack">
+        <div class="pc-carousel" data-slides='[
+          {"icon":"fa-solid fa-dumbbell","color":"#0b3d91","label":"Fitness Dashboard"},
+          {"icon":"fa-solid fa-chart-bar","color":"#092d6b","label":"Analytics & Charts"},
+          {"icon":"fa-solid fa-lock","color":"#071f4a","label":"JWT Auth & Role Access"},
+          {"icon":"fa-solid fa-utensils","color":"#0b3d91","label":"Calorie Goal Tracker"}
+        ]'></div>
+        <div class="pc-body">
+          <div class="pc-meta"><span class="pc-badge fullstack">Full-Stack</span><span class="pc-date">Jan–May 2025</span></div>
+          <h3 class="pc-title">ACTIV-ATE</h3>
+          <p class="pc-sub">Fitness Tracking Web App — C# .NET · React · MySQL</p>
+          <ul class="pc-pts">
+            <li>Built a full-stack fitness application using <strong>React (TypeScript) + Mantine CSS</strong> frontend and <strong>C# .NET MVC</strong> backend with MySQL — implementing Model-View-Controller patterns for scalable, maintainable architecture.</li>
+            <li>Engineered <strong>secure RESTful APIs</strong> with JWT authentication, role-based access control, and full CRUD operations managing fitness logs, calorie goals, and performance analytics.</li>
+            <li>Designed <strong>interactive dashboards</strong> with dynamic Chart.js visualizations tracking user fitness trends, calorie deficits, and workout progress over time.</li>
+          </ul>
+          <div class="pc-tags"><span>React</span><span>TypeScript</span><span>C# .NET</span><span>MySQL</span><span>MVC</span><span>JWT</span></div>
+        </div>
+      </div>
+
+      <!-- PRICEHAWK AI -->
+      <div class="pc featured" data-cat="ai fullstack">
+        <span class="feat-tag">⭐ Featured</span>
+        <div class="pc-carousel" data-slides='[
+          {"icon":"fa-solid fa-chart-line","color":"#0c4a6e","label":"7-Day Price Forecasting"},
+          {"icon":"fa-solid fa-spider","color":"#083752","label":"Amazon & Flipkart Scraping"},
+          {"icon":"fa-solid fa-bell","color":"#0c4a6e","label":"Email Price Alerts"},
+          {"icon":"fa-solid fa-microchip","color":"#051e2e","label":"Gradient Boosting ML Model"}
+        ]'></div>
+        <div class="pc-body">
+          <div class="pc-meta"><span class="pc-badge ai">AI / ML</span><span class="pc-badge fullstack" style="margin-left:4px">Full-Stack</span><span class="pc-date">2025</span></div>
+          <h3 class="pc-title">PriceHawk AI</h3>
+          <p class="pc-sub">AI Price Intelligence & 7-Day Forecasting — Next.js · FastAPI · scikit-learn</p>
+          <ul class="pc-pts">
+            <li>Built a full-stack price intelligence platform with <strong>Next.js 15</strong> frontend and <strong>FastAPI + scikit-learn</strong> backend — using Playwright-powered scraping of Amazon/Flipkart with automated price normalization.</li>
+            <li>Developed a <strong>Gradient Boosting regression model</strong> with feature-engineered time-series inputs (rolling averages, lag values, price velocity) to forecast 7-day price movements with confidence scoring.</li>
+            <li>Architected a <strong>microservices backend</strong> with Redis job queues, PostgreSQL (Neon) storage, and Resend API email alerts — deployed on Railway with Upstash Redis for production reliability.</li>
+          </ul>
+          <div class="pc-tags"><span>Next.js 15</span><span>FastAPI</span><span>scikit-learn</span><span>Redis</span><span>PostgreSQL</span><span>Playwright</span></div>
+        </div>
+      </div>
+
+      <!-- AI MOCK INTERVIEWER -->
+      <div class="pc featured" data-cat="ai">
+        <span class="feat-tag">⭐ Featured</span>
+        <div class="pc-carousel" data-slides='[
+          {"icon":"fa-solid fa-robot","color":"#1e3a5f","label":"Fine-tuned Phi-2 LLM"},
+          {"icon":"fa-solid fa-file-lines","color":"#152c47","label":"Resume & JD Upload"},
+          {"icon":"fa-solid fa-comments","color":"#1e3a5f","label":"Context-Aware Q&A"},
+          {"icon":"fa-solid fa-cloud","color":"#0f1f35","label":"GCP + Kubernetes Deploy"}
+        ]'></div>
+        <div class="pc-body">
+          <div class="pc-meta"><span class="pc-badge ai">AI / ML</span><span class="pc-date">May–Jun 2025</span></div>
+          <h3 class="pc-title">AI Mock Interviewer</h3>
+          <p class="pc-sub">LLM Fine-Tuning + RAG Simulator — Phi-2 · React · GCP · K8s</p>
+          <ul class="pc-pts">
+            <li>Fine-tuned <strong>Microsoft Phi-2 using PyTorch</strong> on domain-specific interview corpora, enabling accurate, role-specific interview simulation across technical and behavioral question categories.</li>
+            <li>Implemented a <strong>RAG pipeline</strong> with vector embeddings and session history — enabling context-aware follow-up questions by referencing uploaded resumes and job descriptions.</li>
+            <li>Deployed on <strong>Google Cloud Run + Kubernetes</strong> with Vertex AI — scaling gracefully under concurrent load with sub-2-second response latency.</li>
+          </ul>
+          <div class="pc-tags"><span>Phi-2</span><span>PyTorch</span><span>RAG</span><span>React</span><span>GCP</span><span>Kubernetes</span></div>
+        </div>
+      </div>
+
+      <!-- CARGO GAMES -->
+      <div class="pc" data-cat="game">
+        <div class="pc-carousel" data-slides='[
+          {"icon":"fa-solid fa-gamepad","color":"#7c0a02","label":"Real-Time Multiplayer"},
+          {"icon":"fa-solid fa-bolt","color":"#5a0801","label":"Sub-100ms Latency"},
+          {"icon":"fa-solid fa-arrows-rotate","color":"#7c0a02","label":"Fault-Tolerant Matchmaking"},
+          {"icon":"fa-solid fa-gears","color":"#3d0400","label":"CI/CD Auto-Deploy"}
+        ]'></div>
+        <div class="pc-body">
+          <div class="pc-meta"><span class="pc-badge game">Game Dev</span><span class="pc-date">Aug–Dec 2025</span></div>
+          <h3 class="pc-title">Cargo Games</h3>
+          <p class="pc-sub">Distributed Real-Time Multiplayer Platform — Rust · React · WebSockets</p>
+          <ul class="pc-pts">
+            <li>Engineered a <strong>real-time multiplayer platform</strong> using Rust (Tokio async) backend and React frontend with WebSocket bi-directional communication achieving sub-100ms message latency.</li>
+            <li>Built a <strong>fault-tolerant matchmaking system</strong> using event-driven architecture with async concurrency — ensuring game state synchronization under high concurrent player load.</li>
+            <li>Automated <strong>CI/CD pipelines</strong> for reliable deployment of game logic updates without service interruption.</li>
+          </ul>
+          <div class="pc-tags"><span>Rust</span><span>React</span><span>WebSockets</span><span>Tokio</span><span>CI/CD</span></div>
+        </div>
+      </div>
+
+      <!-- AGRI-TECH -->
+      <div class="pc" data-cat="mobile ai">
+        <div class="pc-carousel" data-slides='[
+          {"icon":"fa-solid fa-seedling","color":"#1a4731","label":"Soil & Crop Monitoring"},
+          {"icon":"fa-solid fa-temperature-half","color":"#123322","label":"Real-Time Sensor Data"},
+          {"icon":"fa-solid fa-brain","color":"#1a4731","label":"Gemma 2 9B AI Insights"},
+          {"icon":"fa-solid fa-fire","color":"#0d2217","label":"Fire Risk Alerts"}
+        ]'></div>
+        <div class="pc-body">
+          <div class="pc-meta"><span class="pc-badge mobile">Mobile / IoT</span><span class="pc-badge ai" style="margin-left:4px">AI</span><span class="pc-date">Jul–Aug 2025</span></div>
+          <h3 class="pc-title">Agri-Tech</h3>
+          <p class="pc-sub">IoT Farm Monitor + AI Insights — React Native · Flask · GCP · Gemma 2 9B</p>
+          <ul class="pc-pts">
+            <li>Built a <strong>React Native IoT monitoring app</strong> ingesting real-time sensor data — temperature, pH, humidity, soil moisture — with predictive fire-risk alerts for proactive farm management.</li>
+            <li>Integrated <strong>Gemma 2 9B LLM via Flask</strong> backend to deliver AI-driven agronomic insights and actionable crop recommendations from live sensor readings.</li>
+            <li>Deployed on <strong>GCP Cloud Run + Kubernetes</strong> with Docker for horizontal auto-scaling and Cloud Storage for persistent IoT data streams.</li>
+          </ul>
+          <div class="pc-tags"><span>React Native</span><span>Flask</span><span>Gemma 2 9B</span><span>GCP</span><span>Docker</span><span>K8s</span></div>
+        </div>
+      </div>
+
+      <!-- LLM DOC ASSISTANT -->
+      <div class="pc" data-cat="ai">
+        <div class="pc-carousel" data-slides='[
+          {"icon":"fa-solid fa-file-lines","color":"#3b0764","label":"PDF Upload & Q&A"},
+          {"icon":"fa-solid fa-magnifying-glass","color":"#2c0550","label":"FAISS Vector Retrieval"},
+          {"icon":"fa-solid fa-wand-magic-sparkles","color":"#3b0764","label":"LoRA Fine-tuned Phi-2"},
+          {"icon":"fa-solid fa-quote-left","color":"#1e0338","label":"Source Citation Answers"}
+        ]'></div>
+        <div class="pc-body">
+          <div class="pc-meta"><span class="pc-badge ai">AI / ML</span><span class="pc-date">Jun–Jul 2025</span></div>
+          <h3 class="pc-title">LLM Document Assistant</h3>
+          <p class="pc-sub">Fine-tuned Phi-2 PDF Q&A — Python · HuggingFace · LangChain</p>
+          <ul class="pc-pts">
+            <li>Fine-tuned <strong>Phi-2 (Hugging Face)</strong> using PEFT/LoRA on domain-specific documents — enabling accurate, document-grounded answers without expensive full retraining.</li>
+            <li>Built a <strong>LangChain RAG pipeline</strong> with FAISS vector retrieval — locating relevant passages and synthesizing precise answers grounded in source material rather than hallucinations.</li>
+            <li>React frontend for PDF upload, natural language querying, and streamed answers with source passage citations.</li>
+          </ul>
+          <div class="pc-tags"><span>Python</span><span>Hugging Face</span><span>LangChain</span><span>FAISS</span><span>React</span><span>LoRA</span></div>
+        </div>
+      </div>
+
+      <!-- EVEREST AIRLINE -->
+      <div class="pc" data-cat="fullstack">
+        <div class="pc-carousel" data-slides='[
+          {"icon":"fa-solid fa-plane-departure","color":"#0a2342","label":"Flight Booking System"},
+          {"icon":"fa-solid fa-users","color":"#071934","label":"Dual Admin & User Dashboards"},
+          {"icon":"fa-solid fa-database","color":"#0a2342","label":"Normalized PostgreSQL Schema"},
+          {"icon":"fa-solid fa-shield","color":"#040f1f","label":"JWT-Secured REST API"}
+        ]'></div>
+        <div class="pc-body">
+          <div class="pc-meta"><span class="pc-badge fullstack">Full-Stack</span><span class="pc-date">Oct 2025 — Present</span></div>
+          <h3 class="pc-title">Everest Airline Management System</h3>
+          <p class="pc-sub">Enterprise Booking Platform — Spring Boot · Angular · PostgreSQL</p>
+          <ul class="pc-pts">
+            <li>Building a <strong>full-stack airline management system</strong> with dual user/admin dashboards — flight search, seat booking, mock payment, real-time scheduling, and route analytics using Angular + Spring Boot.</li>
+            <li>Built a <strong>JWT-secured REST API</strong> (Spring Boot) managing booking workflows, real-time availability, and admin-level flight management — containerized with Docker.</li>
+            <li>Designed a <strong>normalized PostgreSQL schema</strong> supporting complex relational queries across flights, users, tickets, and routes — architected for future ML route demand prediction.</li>
+          </ul>
+          <div class="pc-tags"><span>Angular</span><span>Spring Boot</span><span>PostgreSQL</span><span>JWT</span><span>Docker</span><span>Tailwind</span></div>
+        </div>
+      </div>
+
+      <!-- RIYAJ UTENSILS -->
+      <div class="pc" data-cat="fullstack ai">
+        <div class="pc-carousel" data-slides='[
+          {"icon":"fa-solid fa-store","color":"#4a1942","label":"E-Commerce Storefront"},
+          {"icon":"fa-solid fa-robot","color":"#381231","label":"Vertex AI Product Chatbot"},
+          {"icon":"fa-solid fa-video","color":"#4a1942","label":"HD Video Demo Feature"},
+          {"icon":"fa-solid fa-boxes-stacked","color":"#220b20","label":"Real-Time Inventory"}
+        ]'></div>
+        <div class="pc-body">
+          <div class="pc-meta"><span class="pc-badge fullstack">Full-Stack</span><span class="pc-date">Jul 2024–Jul 2025</span></div>
+          <h3 class="pc-title">Riyaj Utensils Shop</h3>
+          <p class="pc-sub">E-Commerce + AI Chatbot — React · Firebase · Vertex AI</p>
+          <ul class="pc-pts">
+            <li>Built a <strong>production e-commerce platform</strong> with React + Tailwind CSS featuring HD product photos, demo videos, and a personalized video-request feature improving purchase confidence.</li>
+            <li>Integrated a <strong>Vertex AI chatbot</strong> trained on the product catalog — enabling 24/7 natural-language product queries, comparisons, and purchase recommendations.</li>
+            <li>Backend on <strong>Firebase + MongoDB</strong> with real-time inventory updates, user session management, and an admin dashboard for order tracking.</li>
+          </ul>
+          <div class="pc-tags"><span>React</span><span>Tailwind</span><span>Firebase</span><span>MongoDB</span><span>Vertex AI</span></div>
+        </div>
+      </div>
+
+      <!-- ELECTRIC RACE CAR -->
+      <div class="pc" data-cat="hardware">
+        <div class="pc-carousel" data-slides='[
+          {"icon":"fa-solid fa-car-side","color":"#7c2d12","label":"CAD Chassis Design"},
+          {"icon":"fa-solid fa-microchip","color":"#5a2009","label":"Arduino C++ Control"},
+          {"icon":"fa-solid fa-print","color":"#7c2d12","label":"3D Printed Components"},
+          {"icon":"fa-solid fa-road","color":"#3d1206","label":"Multi-Terrain Testing"}
+        ]'></div>
+        <div class="pc-body">
+          <div class="pc-meta"><span class="pc-badge hardware">Hardware</span><span class="pc-date">2022–2023</span></div>
+          <h3 class="pc-title">Electric Race Car Design</h3>
+          <p class="pc-sub">Electromechanical Prototype — Fusion 360 · Arduino · 3D Printing</p>
+          <ul class="pc-pts">
+            <li>Designed a <strong>small-scale electric race car prototype</strong> in Autodesk Fusion 360 — modeling chassis, drivetrain, suspension geometry, and aerodynamic body panels with tolerances suited for 3D printing.</li>
+            <li>Programmed <strong>Arduino C++ embedded control systems</strong> governing motor speed, wheel rotation synchronization, steering servo integration, and sensor feedback — enabling stable handling across terrain types.</li>
+            <li>Conducted iterative <strong>durability testing</strong> across multiple terrain conditions — refining both firmware and physical design based on empirical performance data until target specifications were met.</li>
+          </ul>
+          <div class="pc-tags"><span>Fusion 360</span><span>Arduino</span><span>C++</span><span>3D Printing</span><span>Embedded Systems</span></div>
+        </div>
+      </div>
+
+    </div><!-- /proj-grid -->
+  </section>
+
+  <!-- ──────────────── CERTIFICATIONS ──────────────── -->
+  <section class="sec" id="certifications">
+
+    <div class="sec-hd">
+      <h2 class="sec-title">Certifications</h2>
+      <div class="sec-line"></div>
+    </div>
+
+    <p class="sec-intro">Verified industry credentials. New certifications are continuously being earned and added here.</p>
+
+    <div class="cert-grid">
+
+      <div class="cert-card">
+        <div class="cert-logo" style="background:#ea4335"><i class="fa-solid fa-database"></i></div>
+        <div class="cert-info">
+          <h3>SQL for Data Science</h3>
+          <p class="cert-by"><i class="fa-solid fa-university"></i> UC Davis / Coursera</p>
+          <p class="cert-yr"><i class="fa-regular fa-calendar"></i> 2024</p>
+          <a href="#" target="_blank" class="cert-link">View Certificate <i class="fa-solid fa-external-link-alt"></i></a>
+        </div>
+        <span class="cert-badge verified">✓ Verified</span>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-logo" style="background:#0078d4"><i class="fa-brands fa-microsoft"></i></div>
+        <div class="cert-info">
+          <h3>Microsoft Azure Fundamentals (AZ-900)</h3>
+          <p class="cert-by"><i class="fa-solid fa-building"></i> Microsoft</p>
+          <p class="cert-yr"><i class="fa-regular fa-calendar"></i> 2024</p>
+          <a href="#" target="_blank" class="cert-link">View Certificate <i class="fa-solid fa-external-link-alt"></i></a>
+        </div>
+        <span class="cert-badge verified">✓ Verified</span>
+      </div>
+
+      <div class="cert-card dimmed">
+        <div class="cert-logo" style="background:#4285f4"><i class="fa-brands fa-google"></i></div>
+        <div class="cert-info">
+          <h3>Google Cloud Professional Developer</h3>
+          <p class="cert-by"><i class="fa-solid fa-cloud"></i> Google Cloud</p>
+          <p class="cert-yr"><i class="fa-regular fa-calendar"></i> In Progress</p>
+          <span class="cert-link muted">Currently Pursuing...</span>
+        </div>
+        <span class="cert-badge pursuing">⏳ Pursuing</span>
+      </div>
+
+      <div class="cert-card dimmed">
+        <div class="cert-logo" style="background:#232f3e"><i class="fa-brands fa-aws"></i></div>
+        <div class="cert-info">
+          <h3>AWS Cloud Practitioner (CLF-C02)</h3>
+          <p class="cert-by"><i class="fa-brands fa-aws"></i> Amazon Web Services</p>
+          <p class="cert-yr"><i class="fa-regular fa-calendar"></i> Planned 2025</p>
+          <span class="cert-link muted">Planned</span>
+        </div>
+        <span class="cert-badge planned">📋 Planned</span>
+      </div>
+
+    </div>
+
+    <div class="cert-note">
+      <i class="fa-solid fa-circle-info"></i>
+      <p>More certifications will be added as earned. Currently pursuing Google Cloud Professional Developer and AWS Cloud Practitioner.</p>
+    </div>
+
+  </section>
+
+  <!-- ──────────────── CONTACT ──────────────── -->
+  <section class="sec" id="contact">
+
+    <div class="sec-hd">
+      <h2 class="sec-title">Contact</h2>
+      <div class="sec-line"></div>
+    </div>
+
+    <div class="contact-grid">
+
+      <!-- LEFT -->
+      <div class="contact-left">
+        <h3 class="contact-headline">Let's Build Something<br/><span class="gold-text">Remarkable Together</span></h3>
+        <p class="contact-body">Whether you're a recruiter, a researcher, or a fellow developer — I'd love to connect. I respond within 24 hours.</p>
+
+        <div class="contact-links">
+          <a href="mailto:criyaj2017@gmail.com" class="cl">
+            <span class="cl-icon"><i class="fa-solid fa-envelope"></i></span>
+            <div><span class="cl-lbl">Email</span><span class="cl-val">criyaj2017@gmail.com</span></div>
+          </a>
+          <a href="https://linkedin.com/in/riyajchaulagain/" target="_blank" class="cl">
+            <span class="cl-icon"><i class="fa-brands fa-linkedin-in"></i></span>
+            <div><span class="cl-lbl">LinkedIn</span><span class="cl-val">linkedin.com/in/riyajchaulagain</span></div>
+          </a>
+          <a href="https://github.com/riyajclgn123" target="_blank" class="cl">
+            <span class="cl-icon"><i class="fa-brands fa-github"></i></span>
+            <div><span class="cl-lbl">GitHub</span><span class="cl-val">github.com/riyajclgn123</span></div>
+          </a>
+        </div>
+
+        <div class="booking-box">
+          <div class="bb-hd"><i class="fa-brands fa-google" style="color:#4285f4;font-size:1.2rem"></i><h4>Schedule a Google Meet</h4></div>
+          <p>Book a 30-minute call directly on my Google Calendar — great for project discussions, interviews, or collaborations.</p>
+          <a href="https://calendar.app.google/iBnX7Cigd1TquF9FA" target="_blank" class="btn-google">
+            <i class="fa-brands fa-google"></i> Book on Google Calendar
+          </a>
+          <p class="bb-note">Or use the form to request a specific time →</p>
+        </div>
+      </div>
+
+      <!-- RIGHT: FORM -->
+      <div class="contact-right">
+        <form id="contactForm" novalidate>
+          <h3>Send a Message</h3>
+          <p class="form-sub">I'll reply within 24 hours.</p>
+          <div class="fg-row">
+            <div class="fg"><label for="cfn">Full Name *</label><input type="text" id="cfn" placeholder="Jane Smith" required/></div>
+            <div class="fg"><label for="cfe">Email *</label><input type="email" id="cfe" placeholder="jane@company.com" required/></div>
+          </div>
+          <div class="fg"><label for="cfs">Subject *</label><input type="text" id="cfs" placeholder="What's this about?" required/></div>
+          <div class="fg">
+            <label for="cft">Type of Inquiry</label>
+            <select id="cft">
+              <option value="">Select...</option>
+              <option>Job / Internship Opportunity</option>
+              <option>Research Collaboration</option>
+              <option>Freelance / Contract Project</option>
+              <option>Technical Question</option>
+              <option>General Networking</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="fg"><label for="cfm">Message *</label><textarea id="cfm" rows="5" placeholder="Tell me about your project or question..." required></textarea></div>
+          <div class="fg">
+            <label for="cfmt">Would you prefer a Google Meet?</label>
+            <select id="cfmt">
+              <option value="no">No, email is fine</option>
+              <option value="yes-book">Yes — I'll book via Google Calendar above</option>
+              <option value="yes-send">Yes — please send me a Meet invite</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-send" id="sendBtn">
+            <span id="sendTxt">Send Message <i class="fa-solid fa-paper-plane"></i></span>
+            <span id="sendLoad" style="display:none"><i class="fa-solid fa-spinner fa-spin"></i> Sending...</span>
+          </button>
+          <div class="form-ok" id="formOk" style="display:none">
+            <i class="fa-solid fa-circle-check"></i> Message sent! I'll reply within 24 hours.
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+</main><!-- /main -->
+
+<script src="main.js"></script>
 </body>
 </html>
