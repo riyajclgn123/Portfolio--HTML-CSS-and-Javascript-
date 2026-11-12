@@ -1,467 +1,189 @@
-/**
- * RIYAJ CHAULAGAIN — Portfolio (UPDATED) · main.js
- * Top nav, project carousels, all animations.
- */
-'use strict';
+(() => {
+  "use strict";
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-const qs  = (s, c=document) => c.querySelector(s);
-const qsa = (s, c=document) => Array.from(c.querySelectorAll(s));
-const wait = ms => new Promise(r => setTimeout(r, ms));
-
-/* ── PAGE FADE IN ── */
-document.body.style.opacity = '0';
-document.body.style.transition = 'opacity 0.5s ease';
-window.addEventListener('load', () => { document.body.style.opacity = '1'; });
-
-/* ── INJECT STYLES ── */
-const inj = document.createElement('style');
-inj.textContent = `
-  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
-  @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-`;
-document.head.appendChild(inj);
-
-/* ═══════════════════════════════════════
-   SPA NAVIGATION — top nav + sidebar synced
-═══════════════════════════════════════ */
-const topNavLinks  = qsa('.tnl');       // top nav desktop links
-const mobNavLinks  = qsa('.tnl-mob');  // mobile dropdown links
-const sections     = qsa('.sec');
-
-function showSection(id) {
-  const target = document.getElementById(id);
-  if (!target) return;
-
-  sections.forEach(s => s.classList.remove('active'));
-  topNavLinks.forEach(l => l.classList.remove('active'));
-  mobNavLinks.forEach(l => l.classList.remove('active'));
-
-  target.classList.add('active');
-
-  topNavLinks.filter(l => l.dataset.section === id).forEach(l => l.classList.add('active'));
-  mobNavLinks.filter(l => l.dataset.section === id).forEach(l => l.classList.add('active'));
-
-  onActivate(id, target);
-  history.replaceState(null, '', '#' + id);
-  window.scrollTo(0, 0);
-  closeMobileNav();
-}
-
-// Desktop top nav clicks
-topNavLinks.forEach(l => {
-  l.addEventListener('click', e => { e.preventDefault(); showSection(l.dataset.section); });
-});
-// Mobile dropdown nav clicks
-mobNavLinks.forEach(l => {
-  l.addEventListener('click', e => { e.preventDefault(); showSection(l.dataset.section); });
-});
-
-// Logo click
-const logo = qs('.topnav-logo');
-if (logo) logo.addEventListener('click', e => { e.preventDefault(); showSection('about'); });
-
-// Any [data-section] link anywhere
-document.addEventListener('click', e => {
-  const a = e.target.closest('a[data-section]');
-  if (a && !a.classList.contains('tnl') && !a.classList.contains('tnl-mob')) {
-    e.preventDefault(); showSection(a.dataset.section);
-  }
-});
-
-// Init
-showSection(window.location.hash.replace('#', '') || 'about');
-
-/* ═══════════════════════════════════════
-   MOBILE NAV TOGGLE (top nav burger)
-═══════════════════════════════════════ */
-const burger         = qs('#mobBurger');
-const mobDropdown    = qs('#mobNavDropdown');
-const sidebar        = qs('#sidebar');
-
-function closeMobileNav() {
-  if (burger)      burger.classList.remove('open');
-  if (mobDropdown) mobDropdown.classList.remove('open');
-  if (sidebar)     sidebar.classList.remove('open');
-}
-
-if (burger) {
-  burger.addEventListener('click', e => {
-    e.stopPropagation();
-    const isOpen = burger.classList.toggle('open');
-    // At <=900px the topnav-links are hidden — toggle the dropdown
-    if (mobDropdown) mobDropdown.classList.toggle('open', isOpen);
-    // At <=768px the sidebar is hidden off-screen — toggle it too
-    if (sidebar) sidebar.classList.toggle('open', isOpen);
-  });
-}
-document.addEventListener('click', e => {
-  if (!e.target.closest('.topnav') && !e.target.closest('.sidebar')) closeMobileNav();
-});
-
-/* ═══════════════════════════════════════
-   TYPING ANIMATION (sidebar title)
-═══════════════════════════════════════ */
-(function initTyping() {
-  const el = qs('.sb-title');
-  if (!el) return;
-
-  const phrases = [
-    'Full-Stack Dev & AI Engineer',
-    'React & .NET Developer',
-    'AI / ML & LLM Engineer',
-    'Cloud & DevOps Engineer',
-    '3.96/4.0 GPA',
-    'CS Student @ SELU',
-  ];
-
-  let pi = 0, ci = 0, del = false, paused = false;
-
-  function tick() {
-    if (paused) return;
-    const w = phrases[pi];
-    if (!del) {
-      el.textContent = w.slice(0, ++ci);
-      if (ci === w.length) {
-        paused = true;
-        setTimeout(() => { paused = false; del = true; tick(); }, 2000);
-        return;
+  /* ---------- Mobile nav ---------- */
+  const toggle = document.querySelector(".nav-toggle");
+  const links = document.getElementById("nav-links");
+  if (toggle && links) {
+    toggle.addEventListener("click", () => {
+      const open = links.classList.toggle("open");
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.textContent = open ? "Close" : "Menu";
+    });
+    links.addEventListener("click", (e) => {
+      if (e.target.closest("a")) {
+        links.classList.remove("open");
+        toggle.setAttribute("aria-expanded", "false");
+        toggle.textContent = "Menu";
       }
-    } else {
-      el.textContent = w.slice(0, --ci);
-      if (ci === 0) { del = false; pi = (pi + 1) % phrases.length; }
-    }
-    setTimeout(tick, del ? 38 : 70);
+    });
   }
-  setTimeout(tick, 1200);
-})();
 
-/* ═══════════════════════════════════════
-   COUNTER ANIMATION
-═══════════════════════════════════════ */
-function animateCounter(el) {
-  const t = parseInt(el.dataset.target, 10);
-  if (isNaN(t)) return;
-  const dur = 1500, t0 = performance.now();
-  const tick = now => {
-    const p = Math.min((now - t0) / dur, 1);
-    el.textContent = Math.floor((1 - Math.pow(1 - p, 3)) * t);
-    if (p < 1) requestAnimationFrame(tick);
-    else el.textContent = t;
+  /* ---------- Typing roles ---------- */
+  const typed = document.querySelector(".typed");
+  if (typed && !reduceMotion) {
+    const roles = typed.dataset.roles.split("|");
+    let r = 0, i = roles[0].length, deleting = true;
+    const tick = () => {
+      if (deleting) {
+        i--;
+        typed.textContent = roles[r].slice(0, i);
+        if (i <= 0) { deleting = false; r = (r + 1) % roles.length; }
+        return setTimeout(tick, 38);
+      }
+      i++;
+      typed.textContent = roles[r].slice(0, i);
+      if (i >= roles[r].length) { deleting = true; return setTimeout(tick, 2200); }
+      setTimeout(tick, 70);
+    };
+    setTimeout(tick, 2600);
+  }
+
+  /* ---------- Weather ---------- */
+  // Snapshot used when a live request isn't possible (for example inside a sandboxed preview).
+  const SNAPSHOT = {
+    asOf: "Nov 12, 2026",
+    temp: 73, code: 0, isDay: true,
+    days: [
+      { d: "Fri", hi: 67, lo: 38, code: 0 },
+      { d: "Sat", hi: 60, lo: 40, code: 1 },
+      { d: "Sun", hi: 60, lo: 44, code: 61 }
+    ]
   };
-  requestAnimationFrame(tick);
-}
+  const ICONS = {
+    sun: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>',
+    moon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>',
+    cloud: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M7 18h10a4 4 0 0 0 .4-8 6 6 0 0 0-11.6 1.6A3.3 3.3 0 0 0 7 18z"/></svg>',
+    rain: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M7 15h10a4 4 0 0 0 .4-8 6 6 0 0 0-11.6 1.6A3.3 3.3 0 0 0 7 15z"/><path d="M9 18l-1 2.5M13 18l-1 2.5M17 18l-1 2.5"/></svg>',
+    storm: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15h10a4 4 0 0 0 .4-8 6 6 0 0 0-11.6 1.6A3.3 3.3 0 0 0 7 15z"/><path d="M12.5 15l-2 3.5h3l-2 3.5"/></svg>',
+    fog: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 9h16M3 13h18M5 17h14"/></svg>'
+  };
+  // WMO weather codes (Open-Meteo)
+  const describe = (code, isDay = true) => {
+    if (code === 0) return { text: isDay ? "Sunny" : "Clear", icon: isDay ? "sun" : "moon" };
+    if (code <= 2) return { text: "Partly cloudy", icon: isDay ? "sun" : "moon" };
+    if (code === 3) return { text: "Overcast", icon: "cloud" };
+    if (code === 45 || code === 48) return { text: "Foggy", icon: "fog" };
+    if (code >= 95) return { text: "Thunderstorms", icon: "storm" };
+    if (code >= 51 && code <= 82) return { text: code >= 80 ? "Showers" : "Rain", icon: "rain" };
+    return { text: "Cloudy", icon: "cloud" };
+  };
 
-/* ═══════════════════════════════════════
-   PROFICIENCY BARS
-═══════════════════════════════════════ */
-function animateBars(ctx) {
-  qsa('.pb-fill', ctx).forEach((f, i) => {
-    setTimeout(() => { f.style.width = (f.dataset.w || 0) + '%'; }, 150 + i * 100);
+  const $ = (id) => document.getElementById(id);
+  const render = (w, live) => {
+    const desc = describe(w.code, w.isDay);
+    $("wx-icon").innerHTML = ICONS[desc.icon];
+    $("wx-temp").textContent = Math.round(w.temp) + "°F";
+    $("wx-cond").textContent = desc.text;
+    $("wx-days").innerHTML = w.days.map(d =>
+      `<div class="wx-day"><b>${d.d}</b>${Math.round(d.hi)}° / ${Math.round(d.lo)}° ${describe(d.code).text.toLowerCase()}</div>`
+    ).join("");
+    const status = $("wx-status");
+    status.textContent = live ? "Live" : "As of " + w.asOf;
+    status.classList.toggle("is-snapshot", !live);
+    return desc.text;
+  };
+
+  const fetchLive = async () => {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 5000);
+    try {
+      const url = "https://api.open-meteo.com/v1/forecast?latitude=30.5044&longitude=-90.4612" +
+        "&current=temperature_2m,weather_code,is_day&daily=weather_code,temperature_2m_max,temperature_2m_min" +
+        "&temperature_unit=fahrenheit&timezone=America%2FChicago&forecast_days=4";
+      const res = await fetch(url, { signal: ctrl.signal });
+      if (!res.ok) throw new Error("weather " + res.status);
+      const j = await res.json();
+      const names = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      return {
+        temp: j.current.temperature_2m, code: j.current.weather_code, isDay: !!j.current.is_day,
+        days: [1, 2, 3].map(k => ({
+          d: names[new Date(j.daily.time[k] + "T12:00").getDay()],
+          hi: j.daily.temperature_2m_max[k], lo: j.daily.temperature_2m_min[k], code: j.daily.weather_code[k]
+        }))
+      };
+    } finally { clearTimeout(t); }
+  };
+
+  // Hand-written fallback lines, used until (or instead of) the Claude caption.
+  const localCaption = (temp, text) => {
+    const t = Math.round(temp);
+    if (/thunder/i.test(text)) return `${t}° and thundering. The Pi stays unplugged and the laptop stays charged.`;
+    if (/rain|shower/i.test(text)) return `Rain on campus, which means extra hours in the lab. Nobody’s complaining.`;
+    if (/fog/i.test(text)) return `Foggy enough that even YOLOv8 would want a second opinion.`;
+    if (t >= 88) return `${t}° of Louisiana humidity. The GPUs are not the only things overheating.`;
+    if (t <= 45) return `${t}° counts as winter down here. Hoodie on, terminal open.`;
+    if (/sunny|clear/i.test(text)) return `${t}° and clear. Good light for testing a camera that has to see the sidewalk.`;
+    return `${t}° and ${text.toLowerCase()} in Hammond. Ideal debugging weather, honestly.`;
+  };
+
+  const askClaude = async (temp, text) => {
+    if (!window.claude || typeof window.claude.use !== "function") return null;
+    const sample = await window.claude.use("sample");
+    if (!sample) return null;
+    const prompt =
+      "Write one witty, warm one-liner (max 22 words) for a weather card on the personal portfolio of Riyaj, " +
+      "a computer science student in Hammond, Louisiana who builds AI apps and assistive hardware like a smart walking stick. " +
+      `Current weather: ${Math.round(temp)}°F and ${text}. ` +
+      "Reference the weather specifically. No hashtags, no emoji, no quotation marks. Reply with the line only.";
+    const out = await sample(prompt, { model: "claude-sonnet-4-6", modelTier: "quick" });
+    const line = (out && out.text || "").trim().replace(/^["“]|["”]$/g, "");
+    return line || null;
+  };
+
+  (async () => {
+    let w = SNAPSHOT, live = false;
+    try { w = await fetchLive(); live = true; } catch (_) { /* sandbox or offline: use snapshot */ }
+    const text = render(w, live);
+    const cap = $("wx-caption");
+    cap.textContent = localCaption(w.temp, text);
+    try {
+      const line = await askClaude(w.temp, text);
+      if (line) cap.textContent = line;
+    } catch (_) { /* keep the hand-written line */ }
+  })();
+
+  /* ---------- Lightbox ---------- */
+  const lb = $("lightbox"), lbImg = $("lb-img"), lbCap = $("lb-cap");
+  const shots = Array.from(document.querySelectorAll(".shot"));
+  let idx = 0, lastFocus = null;
+  const show = (n) => {
+    idx = (n + shots.length) % shots.length;
+    const img = shots[idx].querySelector("img");
+    lbImg.src = img.currentSrc || img.src;
+    lbImg.alt = img.alt;
+    lbCap.textContent = shots[idx].dataset.cap || img.alt;
+  };
+  const open = (n) => {
+    lastFocus = document.activeElement;
+    show(n);
+    lb.hidden = false;
+    document.body.style.overflow = "hidden";
+    lb.querySelector(".lb-close").focus();
+  };
+  const close = () => {
+    lb.hidden = true;
+    document.body.style.overflow = "";
+    if (lastFocus) lastFocus.focus();
+  };
+  shots.forEach((s, n) => s.addEventListener("click", () => open(n)));
+  lb.querySelector(".lb-close").addEventListener("click", close);
+  lb.querySelector(".lb-prev").addEventListener("click", () => show(idx - 1));
+  lb.querySelector(".lb-next").addEventListener("click", () => show(idx + 1));
+  lb.addEventListener("click", (e) => { if (e.target === lb) close(); });
+  document.addEventListener("keydown", (e) => {
+    if (lb.hidden) return;
+    if (e.key === "Escape") close();
+    else if (e.key === "ArrowRight") show(idx + 1);
+    else if (e.key === "ArrowLeft") show(idx - 1);
   });
-}
-
-/* ═══════════════════════════════════════
-   STAGGER HELPER
-═══════════════════════════════════════ */
-function stagger(items, base = 0, step = 65) {
-  items.forEach((el, i) => {
-    const delay = base + i * step;
-    el.style.cssText += `opacity:0;transform:translateY(18px);transition:opacity .4s ease ${delay}ms,transform .4s ease ${delay}ms`;
-    setTimeout(() => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }, delay + 10);
+  let sx = null;
+  lb.addEventListener("touchstart", (e) => { sx = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener("touchend", (e) => {
+    if (sx === null) return;
+    const dx = e.changedTouches[0].clientX - sx;
+    if (Math.abs(dx) > 50) show(idx + (dx < 0 ? 1 : -1));
+    sx = null;
   });
-}
-
-/* ═══════════════════════════════════════
-   PROJECT CAROUSELS
-═══════════════════════════════════════ */
-function buildCarousels() {
-  qsa('.pc-carousel').forEach(carousel => {
-    const rawData = carousel.dataset.slides;
-    if (!rawData) return;
-    let slides;
-    try { slides = JSON.parse(rawData); } catch(e) { return; }
-
-    carousel.innerHTML = '';
-
-    // Build slides
-    slides.forEach((slide, i) => {
-      const div = document.createElement('div');
-      div.className = 'pc-carousel-slide' + (i === 0 ? ' active' : '');
-      div.style.background = slide.color || '#0a0a10';
-      div.innerHTML = `<i class="${slide.icon}"></i><span class="slide-label">${slide.label}</span>`;
-      carousel.appendChild(div);
-    });
-
-    // Dots
-    const dotsWrap = document.createElement('div');
-    dotsWrap.className = 'pc-carousel-dots';
-    slides.forEach((_, i) => {
-      const dot = document.createElement('button');
-      dot.className = 'pc-dot' + (i === 0 ? ' active' : '');
-      dot.addEventListener('click', e => { e.stopPropagation(); goTo(i); });
-      dotsWrap.appendChild(dot);
-    });
-    carousel.appendChild(dotsWrap);
-
-    // Arrows
-    const prev = document.createElement('button');
-    prev.className = 'pc-carousel-prev';
-    prev.innerHTML = '<i class="fa-solid fa-chevron-left"></i>';
-    const next = document.createElement('button');
-    next.className = 'pc-carousel-next';
-    next.innerHTML = '<i class="fa-solid fa-chevron-right"></i>';
-    carousel.appendChild(prev);
-    carousel.appendChild(next);
-
-    let current = 0;
-    let autoTimer = null;
-
-    function goTo(idx) {
-      const allSlides = qsa('.pc-carousel-slide', carousel);
-      const allDots   = qsa('.pc-dot', dotsWrap);
-      allSlides[current].classList.remove('active');
-      allSlides[current].classList.add('exit');
-      setTimeout(() => allSlides[current < idx || (current === slides.length-1 && idx === 0) ? current : current].classList.remove('exit'), 500);
-      current = (idx + slides.length) % slides.length;
-      allSlides.forEach((s, i) => { s.classList.remove('active','exit'); });
-      allSlides[current].classList.add('active');
-      allDots.forEach((d, i) => d.classList.toggle('active', i === current));
-    }
-
-    function startAuto() {
-      stopAuto();
-      autoTimer = setInterval(() => goTo(current + 1), 2800);
-    }
-    function stopAuto() {
-      if (autoTimer) clearInterval(autoTimer);
-    }
-
-    prev.addEventListener('click', e => { e.stopPropagation(); goTo(current - 1); stopAuto(); startAuto(); });
-    next.addEventListener('click', e => { e.stopPropagation(); goTo(current + 1); stopAuto(); startAuto(); });
-
-    carousel.addEventListener('mouseenter', stopAuto);
-    carousel.addEventListener('mouseleave', startAuto);
-
-    startAuto();
-  });
-}
-
-/* ═══════════════════════════════════════
-   PROJECT FILTER — fixed multi-category + live search
-═══════════════════════════════════════ */
-(function initFilter() {
-
-  let activeFilter = 'all';
-  let searchQuery  = '';
-
-  // --- inject search bar after filter buttons ---
-  const filterRow = qs('.proj-filters');
-  if (filterRow) {
-    const wrap = document.createElement('div');
-    wrap.className = 'proj-search-wrap';
-    wrap.innerHTML = `
-      <span class="proj-search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
-      <input type="text" id="projSearch" class="proj-search-input" placeholder="Search projects…" autocomplete="off"/>
-      <button class="proj-search-clear" id="projSearchClear" aria-label="Clear" style="display:none">
-        <i class="fa-solid fa-xmark"></i>
-      </button>`;
-    filterRow.insertAdjacentElement('afterend', wrap);
-
-    const inp   = qs('#projSearch');
-    const clear = qs('#projSearchClear');
-
-    inp.addEventListener('input', () => {
-      searchQuery = inp.value.trim().toLowerCase();
-      clear.style.display = searchQuery ? '' : 'none';
-      applyFilter();
-    });
-    clear.addEventListener('click', () => {
-      inp.value = ''; searchQuery = '';
-      clear.style.display = 'none';
-      inp.focus();
-      applyFilter();
-    });
-  }
-
-  // --- core filter logic ---
-  function applyFilter() {
-    const cards = qsa('.pc');
-    let vi = 0; // visible index for stagger
-
-    cards.forEach(card => {
-      // parse multi-category: "ai fullstack" → ['ai','fullstack']
-      const cats = (card.dataset.cat || '')
-        .split(/\s+/).map(s => s.trim()).filter(Boolean);
-
-      // build searchable text from title, sub, and tech tags
-      const title = (card.querySelector('.pc-title')?.textContent || '').toLowerCase();
-      const sub   = (card.querySelector('.pc-sub')?.textContent   || '').toLowerCase();
-      const tags  = Array.from(card.querySelectorAll('.pc-tags span'))
-                        .map(s => s.textContent.toLowerCase()).join(' ');
-      const body  = title + ' ' + sub + ' ' + tags;
-
-      const catOk  = activeFilter === 'all' || cats.includes(activeFilter);
-      const srchOk = !searchQuery || body.includes(searchQuery);
-
-      if (catOk && srchOk) {
-        card.classList.remove('hide');
-        card.style.display = '';
-        const delay = vi * 55;
-        card.style.opacity   = '0';
-        card.style.transform = 'translateY(16px)';
-        card.style.transition =
-          `opacity .35s ease ${delay}ms, transform .35s ease ${delay}ms, border-color .25s, box-shadow .3s`;
-        requestAnimationFrame(() => requestAnimationFrame(() => {
-          card.style.opacity   = '1';
-          card.style.transform = 'translateY(0)';
-        }));
-        vi++;
-      } else {
-        card.classList.add('hide');
-        card.style.display = 'none';
-      }
-    });
-
-    // empty state
-    let empty = qs('#projEmpty');
-    if (vi === 0) {
-      if (!empty) {
-        empty = document.createElement('p');
-        empty.id = 'projEmpty';
-        empty.style.cssText =
-          'grid-column:1/-1;text-align:center;padding:3rem 1rem;color:var(--tx-4);font-size:.9rem;';
-        empty.textContent = 'No projects match — try a different keyword or filter.';
-        qs('#projGrid')?.appendChild(empty);
-      }
-    } else if (empty) {
-      empty.remove();
-    }
-  }
-
-  // --- filter button clicks ---
-  document.addEventListener('click', e => {
-    const btn = e.target.closest('.pf');
-    if (!btn) return;
-    qsa('.pf').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    activeFilter = btn.dataset.filter;
-    applyFilter();
-  });
-
-  // expose for onActivate
-  window._applyProjectFilter = applyFilter;
-
 })();
-
-/* ═══════════════════════════════════════
-   CARD TILT
-═══════════════════════════════════════ */
-document.addEventListener('mousemove', e => {
-  const card = e.target.closest('.pc, .skc, .stat-card, .cert-card');
-  if (!card) return;
-  const r  = card.getBoundingClientRect();
-  const rx = ((e.clientY - r.top  - r.height/2) / (r.height/2)) * -4;
-  const ry = ((e.clientX - r.left - r.width /2) / (r.width /2)) *  4;
-  card.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
-  card.style.transition = 'transform 0.07s ease';
-});
-document.addEventListener('mouseleave', e => {
-  const card = e.target.closest('.pc, .skc, .stat-card, .cert-card');
-  if (!card) return;
-  card.style.transform = '';
-  card.style.transition = 'transform 0.4s ease, border-color 0.25s ease, box-shadow 0.3s ease';
-}, true);
-
-/* ═══════════════════════════════════════
-   CONTACT FORM
-═══════════════════════════════════════ */
-document.addEventListener('submit', async e => {
-  if (!e.target.closest('#contactForm')) return;
-  e.preventDefault();
-
-  const form   = e.target;
-  const btn    = qs('#sendBtn');
-  const txt    = qs('#sendTxt');
-  const load   = qs('#sendLoad');
-  const ok     = qs('#formOk');
-
-  const v = id => (qs('#' + id, form)||{}).value || '';
-  const name = v('cfn').trim(), email = v('cfe').trim(),
-        subj = v('cfs').trim(), type  = v('cft'),
-        msg  = v('cfm').trim(), meet  = v('cfmt');
-
-  if (!name || !email || !subj || !msg) {
-    form.style.animation = 'shake 0.4s ease';
-    setTimeout(() => form.style.animation = '', 500);
-    return;
-  }
-
-  btn.disabled = true;
-  if (txt)  txt.style.display  = 'none';
-  if (load) load.style.display = 'flex';
-
-  await wait(650);
-
-  const body = encodeURIComponent(
-    `Hi Riyaj,\n\nName: ${name}\nType: ${type||'General'}\n\n${msg}\n\nMeeting preference: ${meet}\n\nBest,\n${name}\n${email}`
-  );
-  window.location.href = `mailto:criyaj2017@gmail.com?subject=${encodeURIComponent(subj)}&body=${body}`;
-
-  btn.disabled = false;
-  if (txt)  txt.style.display  = 'flex';
-  if (load) load.style.display = 'none';
-  if (ok)  { ok.style.display = 'flex'; setTimeout(() => ok.style.display = 'none', 7000); }
-  form.reset();
-});
-
-/* ═══════════════════════════════════════
-   ON SECTION ACTIVATE — run animations
-═══════════════════════════════════════ */
-function onActivate(id, sec) {
-
-  if (id === 'about') {
-    const counters = qsa('.stat-n[data-target]', sec);
-    counters.forEach(el => { el.textContent = '0'; });
-    setTimeout(() => counters.forEach(el => animateCounter(el)), 350);
-
-    qsa('.pb-fill', sec).forEach(f => { f.style.width = '0'; f.style.transition = 'none'; });
-    setTimeout(() => {
-      qsa('.pb-fill', sec).forEach(f => { f.style.transition = 'width 1.3s cubic-bezier(.4,0,.2,1)'; });
-      animateBars(sec);
-    }, 500);
-
-    stagger(qsa('.skc', sec), 250, 70);
-    stagger(qsa('.stat-card', sec), 100, 60);
-  }
-
-  if (id === 'resume') {
-    stagger(qsa('.tli', sec), 80, 90);
-    stagger(qsa('.inv-card', sec), 200, 70);
-  }
-
-  if (id === 'projects') {
-    qsa('.pc', sec).forEach(c => {
-      c.classList.remove('hide');
-      c.style.display = '';
-    });
-    // reset filter buttons to "all"
-    qsa('.pf').forEach(b => b.classList.toggle('active', b.dataset.filter === 'all'));
-    // clear search box if present
-    const si = qs('#projSearch');
-    const sc = qs('#projSearchClear');
-    if (si) { si.value = ''; }
-    if (sc) { sc.style.display = 'none'; }
-    stagger(qsa('.pc', sec), 80, 60);
-    buildCarousels();
-    // re-run filter so internal state matches the reset UI
-    if (window._applyProjectFilter) setTimeout(window._applyProjectFilter, 0);
-  }
-
-  if (id === 'certifications') {
-    stagger(qsa('.cert-card', sec), 100, 80);
-  }
-
-  if (id === 'contact') {
-    stagger(qsa('.cl', sec), 100, 60);
-  }
-}
