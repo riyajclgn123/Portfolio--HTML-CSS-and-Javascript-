@@ -1,7 +1,7 @@
 /* ==========================================================================
    Riyaj Chaulagain — portfolio
    Two themes: Light (cream + forest green) and Dark (warm black + ember orange),
-   plus Auto, which follows the visitor's device. Newsreader + Schibsted Grotesk.
+   first visit follows the device, then the visitor's pick is remembered. Newsreader + Schibsted Grotesk.
    ========================================================================== */
 
 /* Light (default): cream paper, deep green ink and accent */
@@ -49,7 +49,7 @@
   color-scheme: light;
 }
 
-/* Dark: warm black with ember orange. Used when picked, or on Auto when the device is dark. */
+/* Dark: warm black with ember orange */
 :root[data-theme="dark"] {
   --paper: #15130F;
   --paper-2: #1F1C17;
@@ -86,7 +86,7 @@
 /* Theme change: a circle grows from the toggle (View Transitions), plain swap elsewhere */
 ::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
 
-/* ---------- Theme toggle (Light / Auto / Dark) ---------- */
+/* ---------- Theme toggle (Light / Dark) ---------- */
 .theme-switch {
   position: relative; display: inline-flex; align-items: center; gap: 2px;
   padding: 3px; margin-left: 18px;
@@ -113,6 +113,10 @@
 /* Smooth scrolling is handled by Lenis (main.js), not CSS scroll-behavior. */
 html { box-sizing: border-box; scroll-padding-top: calc(var(--nav-h) + 16px); -webkit-text-size-adjust: 100%; }
 html, body { overscroll-behavior: none; }
+/* No sideways scrolling on any device (clip is the modern iOS-safe version of hidden) */
+/* body overflow-x: hidden below is the fallback; clip does not create a scroll container, so sticky + smooth scroll keep working */
+@supports (overflow: clip) { html, body { overflow-x: clip !important; } }
+.case > *, .cards > *, .moments > *, .about-grid > *, .edu > *, .hero > * { min-width: 0; }
 * { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--ink) 30%, transparent) transparent; }
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
@@ -321,10 +325,11 @@ main > section { max-width: var(--maxw); margin: 0 auto; padding-left: var(--gut
   -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%);
           mask-image: linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%);
 }
-.logo-track { display: flex; width: max-content; animation: marquee 40s linear infinite; }
+.logo-track { display: flex; width: max-content; animation: marquee 40s linear infinite; will-change: transform; backface-visibility: hidden; }
 .logo-track .logo-row { flex-wrap: nowrap; justify-content: flex-start; padding-right: clamp(40px, 6vw, 88px); }
-.logo-marquee.is-moving:hover .logo-track { animation-play-state: paused; }
-@keyframes marquee { to { transform: translateX(-50%); } }
+/* Pause on hover only with a real mouse; on phones a tap would otherwise freeze it */
+@media (hover: hover) and (pointer: fine) { .logo-marquee.is-moving:hover .logo-track { animation-play-state: paused; } }
+@keyframes marquee { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-50%, 0, 0); } }
 
 /* ---------- Experience ---------- */
 .timeline { list-style: none; margin: 0; padding: 0; }
@@ -654,8 +659,8 @@ a.card-link.site::after { content: " →"; }
   .proof { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .proof > div:nth-child(3) { padding-left: 0; border-left: 0; }
   .proof > div:nth-child(n + 3) { border-top: 1px solid var(--rule); }
-  .about-grid, .case, .edu { grid-template-columns: 1fr; }
-  .case.flip { grid-template-columns: 1fr; }
+  .about-grid, .case, .edu { grid-template-columns: minmax(0, 1fr); }
+  .case.flip { grid-template-columns: minmax(0, 1fr); }
   .case.flip .case-text { order: 0; }
   .gallery.carousel { position: static; }
   .moments, .m-feature, .m-wide { grid-template-columns: 1fr; }
