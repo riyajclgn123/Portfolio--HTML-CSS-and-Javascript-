@@ -212,27 +212,42 @@
       g.classList.toggle("paused", play && hover);
     };
     bar.addEventListener("animationend", () => { if (g.classList.contains("playing")) go(i + 1, false); });
-    stage.addEventListener("mouseenter", () => { hover = true; sync(); });
-    stage.addEventListener("mouseleave", () => { hover = false; sync(); });
+    stage.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") { hover = true; sync(); } });
+    stage.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") { hover = false; sync(); } });
     new IntersectionObserver(([en]) => { visible = en.isIntersecting; sync(); }, { threshold: 0.5 }).observe(stage);
 
     // Drag / swipe
-    let x0 = null, dx = 0, dragged = false;
+    // Horizontal drags move the carousel; vertical ones are left to the page so phones scroll normally.
+    let x0 = null, y0 = 0, dx = 0, dragged = false, pid = null;
     stage.addEventListener("pointerdown", (e) => {
       if (e.button !== 0 || e.target.closest(".cz-nav")) return;
-      x0 = e.clientX; dx = 0; dragged = false;
+      x0 = e.clientX; y0 = e.clientY; dx = 0; dragged = false; pid = e.pointerId;
     });
-    window.addEventListener("pointermove", (e) => {
-      if (x0 === null) return;
+    stage.addEventListener("pointermove", (e) => {
+      if (x0 === null || e.pointerId !== pid) return;
       dx = e.clientX - x0;
-      if (!dragged && Math.abs(dx) > 6) { dragged = true; stage.classList.add("dragging"); }
-      if (dragged) track.style.transform = `translate3d(calc(${-i * 100}% + ${dx}px), 0, 0)`;
+      const dy = e.clientY - y0;
+      if (!dragged) {
+        if (Math.abs(dy) > 8 && Math.abs(dy) > Math.abs(dx)) { x0 = null; return; } // page scroll wins
+        if (Math.abs(dx) > 8) { dragged = true; stage.classList.add("dragging"); try { stage.setPointerCapture(pid); } catch (_) {} }
+      }
+      if (dragged) {
+        const max = stage.clientWidth * 0.6;
+        const d = Math.max(-max, Math.min(max, dx));
+        track.style.transform = `translate3d(calc(${-i * 100}% + ${d}px), 0, 0)`;
+      }
     });
-    window.addEventListener("pointerup", () => {
-      if (x0 === null) return;
+    const endDrag = (cancelled) => {
+      if (x0 === null && !dragged) return;
       x0 = null; stage.classList.remove("dragging");
-      if (dragged) go(Math.abs(dx) > stage.clientWidth * 0.12 ? i + (dx < 0 ? 1 : -1) : i, true);
-    });
+      if (dragged) {
+        go(!cancelled && Math.abs(dx) > stage.clientWidth * 0.12 ? i + (dx < 0 ? 1 : -1) : i, true);
+        setTimeout(() => { dragged = false; }, 60); // swallow only the click that ends this drag
+      }
+    };
+    stage.addEventListener("pointerup", () => endDrag(false));
+    stage.addEventListener("pointercancel", () => endDrag(true));
+    stage.addEventListener("lostpointercapture", () => { if (stage.classList.contains("dragging")) endDrag(false); });
     // a drag should not also open the lightbox
     stage.addEventListener("click", (e) => { if (dragged) { e.stopPropagation(); e.preventDefault(); dragged = false; } }, true);
 
@@ -252,45 +267,62 @@
     }
     row.replaceWith(track);
     lm.classList.add("is-moving");
+    // Same speed on every screen: duration comes from the distance travelled, not a fixed time
+    const PX_PER_SEC = 70;
+    const setSpeed = () => {
+      const half = track.scrollWidth / 2;
+      if (half) track.style.animationDuration = (half / PX_PER_SEC).toFixed(1) + "s";
+    };
+    setSpeed();
+    // re-measure whenever the strip changes size (logos finishing loading, rotation, resize)
+    if ("ResizeObserver" in window) new ResizeObserver(() => setSpeed()).observe(track);
+    track.querySelectorAll("img").forEach((im) => { if (!im.complete) im.addEventListener("load", setSpeed, { once: true }); });
+    window.addEventListener("load", setSpeed);
+    window.addEventListener("resize", setSpeed);
+    window.addEventListener("orientationchange", setSpeed);
   }
 
-  /* ---------- Theme: Light / Auto / Dark, with a circular reveal from the toggle ---------- */
+  /* ---------- Theme: Light / Dark, with a circular reveal from the toggle ----------
+     First visit follows the device; once the visitor picks one, that choice is remembered. */
   const root = document.documentElement;
   const sw = document.querySelector(".theme-switch");
   const picks = document.querySelectorAll("[data-theme-pick]");
-  const POS = { light: 0, auto: 1, dark: 2 };
+  const POS = { light: 0, dark: 1 };
+  const deviceDark = window.matchMedia("(prefers-color-scheme: dark)");
   const metaTheme = () => {
     const bg = getComputedStyle(root).getPropertyValue("--paper").trim();
     document.querySelectorAll('meta[name="theme-color"]').forEach((m) => m.setAttribute("content", bg));
   };
-  const setMode = (mode) => {
-    if (mode === "auto") root.removeAttribute("data-theme"); else root.setAttribute("data-theme", mode);
+  const setMode = (mode, save) => {
+    root.setAttribute("data-theme", mode);
     if (sw) sw.style.setProperty("--pos", POS[mode]);
     picks.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.themePick === mode)));
-    try { localStorage.setItem("theme", mode); } catch (e) {}
+    if (save) { try { localStorage.setItem("theme", mode); } catch (e) {} }
     metaTheme();
     window.dispatchEvent(new Event("themechange"));
   };
   picks.forEach((b) => b.addEventListener("click", () => {
     const mode = b.dataset.themePick;
-    if (!document.startViewTransition || reduceMotion) return setMode(mode);
+    if (root.getAttribute("data-theme") === mode) return;
+    if (!document.startViewTransition || prefersReduced) return setMode(mode, true);
     const r = b.getBoundingClientRect();
     const x = r.left + r.width / 2, y = r.top + r.height / 2;
     const end = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
-    const t = document.startViewTransition(() => setMode(mode));
+    const t = document.startViewTransition(() => setMode(mode, true));
     t.ready.then(() => {
       root.animate(
         { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
         { duration: 700, easing: "cubic-bezier(.65, 0, .35, 1)", pseudoElement: "::view-transition-new(root)" }
       );
-    });
+    }).catch(() => {});
   }));
-  let saved = "auto";
-  try { saved = localStorage.getItem("theme") || "auto"; } catch (e) {}
-  if (!(saved in POS)) saved = "auto";
-  setMode(saved);
-  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
-    if (!root.hasAttribute("data-theme")) { metaTheme(); window.dispatchEvent(new Event("themechange")); }
+  let saved = null;
+  try { saved = localStorage.getItem("theme"); } catch (e) {}
+  setMode(saved in POS ? saved : (deviceDark.matches ? "dark" : "light"), false);
+  deviceDark.addEventListener("change", (m) => {
+    let chosen = null;
+    try { chosen = localStorage.getItem("theme"); } catch (e) {}
+    if (!(chosen in POS)) setMode(m.matches ? "dark" : "light", false);
   });
 
   /* ---------- Footer: auto-fit wordmark + reveal from behind ---------- */
